@@ -15,6 +15,7 @@ export default function Home() {
     setPropertyTypes,
     setPageInfo,
     setListLoading,
+    listings,
     currentPage,
     ...data
   } = useApiDataStore(state => state)
@@ -25,7 +26,6 @@ export default function Home() {
       if (res) {
         setFilterGroups(res?.data.results?.filterGroups)
         setListings(res?.data?.results?.listings)
-        setPropertyTypes(res?.data?.results?.listings)
         setPageInfo(res?.data?.results?.pageCount, res?.data?.results?.pageSize)
         setError(undefined)
       }
@@ -33,6 +33,10 @@ export default function Home() {
       .catch(_err => setError("Error"))
       .finally(() => setListLoading(false))
   }, [currentPage])
+
+  useEffect(() => {
+    setPropertyTypes(listings)
+  }, [listings])
 
   if (typeof window === undefined) return null
 

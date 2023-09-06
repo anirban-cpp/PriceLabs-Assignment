@@ -121,3 +121,12 @@ export const getCenterCoordinates = (
 
   return coordinates;
 };
+
+export const removePropertyFromList = (
+  setListings: (value?: Listing[] | undefined) => void,
+  propertyId?: string,
+  listings?: Listing[]
+) => {
+  const newList = listings?.filter((item) => item.propertyId !== propertyId);
+  if (newList && newList.length > 0) setListings(newList);
+};

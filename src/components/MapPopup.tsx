@@ -1,11 +1,15 @@
 import useApiDataStore from '@/store/useApiDataStore'
+import { removePropertyFromList } from '@/utils/helperFunctions'
 import React from 'react'
 
 const MapPopup = () => {
     const currentListing = useApiDataStore(state => state.currentListing)
+    const listings = useApiDataStore(state => state.listings)
+    const setListings = useApiDataStore(state => state.setListings)
+
     if (!currentListing) return null
 
-    const { images, propertyType, sleeps, bedrooms, bathrooms } = currentListing
+    const { images, propertyType, sleeps, bedrooms, bathrooms, propertyId } = currentListing
     const bathroomCount = bathrooms?.full ?? 0 + bathrooms?.half ?? 0 + bathrooms?.toiletOnly ?? 0
 
     let countData = []
@@ -19,7 +23,7 @@ const MapPopup = () => {
             <div className='flex flex-col w-full'>
                 {propertyType && <p className='whitespace-nowrap !mt-0 !mb-2 text-lg'>{propertyType}</p>}
                 {countData.length > 0 && <p className='!m-0 whitespace-nowrap text-gray-500 text-sm'>{countData.join(' . ')}</p>}
-                <button className=' mt-3 flex justify-end text-blue-500 text-sm font-semibold'>Remove</button>
+                <button onClick={() => removePropertyFromList(setListings, propertyId, listings)} className=' mt-3 flex justify-end text-blue-500 text-sm font-semibold'>Remove</button>
             </div>
         </div>
     )

@@ -5,6 +5,7 @@ import useApiDataStore from '@/store/useApiDataStore'
 import ListLoader from './Loader/ListLoader'
 import { Listing, PropertyListProps } from '@/interfaces'
 import { getListingBasedOnSearch, getListingBasedOnTab } from '@/utils/helperFunctions'
+import SearchNotFound from './SearchNotFound'
 
 const PropertyList = ({ checked = false, selectedTab, searchInput }: PropertyListProps) => {
     const propertyList = useApiDataStore(state => state.listings)
@@ -24,8 +25,7 @@ const PropertyList = ({ checked = false, selectedTab, searchInput }: PropertyLis
                 const filteredData = getListingBasedOnSearch(propertyList, searchInput)
                 setFilteredListings(filteredData)
             }
-        } else
-            setFilteredListings(propertyList)
+        } else setFilteredListings(propertyList)
     }, [propertyList, selectedTab, searchInput])
 
     useEffect(() => {
@@ -33,9 +33,7 @@ const PropertyList = ({ checked = false, selectedTab, searchInput }: PropertyLis
             const data = filteredListings?.map(data => data?.propertyId)
             if (data && data.length > 0) setCheckedProperties(data)
         }
-        else {
-            setCheckedProperties([])
-        }
+        else setCheckedProperties([])
     }, [checked, filteredListings])
 
     if (listLoading) {
@@ -47,6 +45,8 @@ const PropertyList = ({ checked = false, selectedTab, searchInput }: PropertyLis
             </>
         )
     }
+
+    if (filteredListings?.length === 0) return <SearchNotFound />
 
     return (
         <>

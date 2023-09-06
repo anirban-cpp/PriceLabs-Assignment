@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Checkbox from './Checkbox';
 import Rating from './Rating';
 import { PropertyListItemProps } from '@/interfaces';
 import useApiDataStore from '@/store/useApiDataStore';
+import { removePropertyFromList } from '@/utils/helperFunctions';
 
 const PropertyListItem = ({
   match,
@@ -23,6 +24,8 @@ const PropertyListItem = ({
   const [check, setCheck] = useState<boolean>()
   const checkedProperties = useApiDataStore(state => state.checkedProperties)
   const setCheckedProperties = useApiDataStore(state => state.setCheckedProperties)
+  const listings = useApiDataStore(state => state.listings)
+  const setListings = useApiDataStore(state => state.setListings)
 
   let countData = []
   if (bathrooms) countData.push(`${bathrooms} br`)
@@ -57,7 +60,7 @@ const PropertyListItem = ({
         </span>
         <div className='flex items-center justify-between'>
           <Rating rating={rating} reviews={reviews} />
-          <button className='text-blue-500 text-sm font-semibold'>Remove</button>
+          <button onClick={() => removePropertyFromList(setListings, propertyId, listings)} className='text-blue-500 text-sm font-semibold cursor-pointer rounded-md hover:px-2 hover:py-1 hover:border hover:border-blue-500 transition-all'>Remove</button>
         </div>
       </div>
     </div>
