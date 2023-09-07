@@ -29,4 +29,4 @@ const MapPopup = () => {
     )
 }
 
-export default MapPopup
+export default React.memo(MapPopup)
