@@ -73,7 +73,6 @@ const PropertyListItem = ({
           <button onClick={() => removePropertyFromList(setListings, propertyId, listings)} className='text-blue-500 text-sm font-semibold cursor-pointer rounded-md hover:px-2 hover:py-1 hover:border hover:border-blue-500 transition-all'>Remove</button>
         </div>
       </div>
-      {propertyId}
     </div>
   )
 }
