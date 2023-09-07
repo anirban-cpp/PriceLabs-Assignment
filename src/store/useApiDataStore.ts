@@ -12,6 +12,10 @@ const useApiDataStore = create<ApistoreDataType>((set) => ({
   currentPage: 1,
   pageInfo: { pageSize: 1, totalPages: 1 },
   listLoading: false,
+  zoom: 12,
+  setZoom: (value: number) => {
+    set((state) => ({ ...state, zoom: value }));
+  },
   setListLoading: (value: boolean) => {
     set((state) => ({ ...state, listLoading: value }));
   },

@@ -19,6 +19,7 @@ export default function Map() {
     const setCurrentListing = useApiDataStore(state => state.setCurrentListing)
     const checkedProperties = useApiDataStore(state => state.checkedProperties)
     const listings = useApiDataStore(state => state.listings)
+    const zoom = useApiDataStore(state => state.zoom)
     const [positions, setPositions] = useState<{
         lat: number;
         lng: number;
@@ -55,7 +56,7 @@ export default function Map() {
     const center = getCenterCoordinates(geoData, positions, currentListing)
 
     return (
-        <MapContainer center={center} zoom={12} style={{ height: '100vh' }}>
+        <MapContainer center={center} zoom={zoom} style={{ height: '100vh' }}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

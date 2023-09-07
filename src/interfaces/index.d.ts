@@ -391,6 +391,7 @@ export interface ApistoreDataType {
   currentPage?: number;
   pageInfo?: { totalPages: number; pageSize: number };
   listLoading: boolean,
+  zoom: number
   setListLoading: (value: boolean) => void,
   setPageInfo: (totalPages: number, pageSize: number) => void
   setCheckedProperties: (checkedProperties?: string[]) => void;
@@ -401,4 +402,5 @@ export interface ApistoreDataType {
   setCurrentListing: (value?: Listing) => void;
   setCurrentPage: (value?: number) => void;
   setTotalPages: (value?: number) => void;
+  setZoom: (value: number) => void;
 }

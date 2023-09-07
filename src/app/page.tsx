@@ -2,6 +2,7 @@
 
 import Map from "@/components/Map";
 import Sidebar from "@/components/Sidebar";
+import Zoom from "@/components/Zoom";
 import { ApiDataType } from "@/interfaces";
 import useApiDataStore from "@/store/useApiDataStore";
 import fetchdata from "@/utils/apiCalls";
@@ -44,6 +45,7 @@ export default function Home() {
     <main>
       <Sidebar />
       <Map />
+      <Zoom />
     </main>
   )
 }
