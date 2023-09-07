@@ -16,11 +16,13 @@ import { CircleMarker } from 'react-leaflet';
 export default function Map() {
     const [geoData, setGeoData] = useState<{ lat: number, lng: number }>();
     const currentListing = useApiDataStore(state => state.currentListing)
+    const setCurrentListing = useApiDataStore(state => state.setCurrentListing)
     const checkedProperties = useApiDataStore(state => state.checkedProperties)
     const listings = useApiDataStore(state => state.listings)
     const [positions, setPositions] = useState<{
         lat: number;
         lng: number;
+        propertyId?: string;
     }[] | undefined>()
 
     useEffect(() => {
@@ -28,7 +30,8 @@ export default function Map() {
             const requiredProperties = getCheckedPropertiesinListed(checkedProperties, listings)
             const geoData = requiredProperties ? requiredProperties.map(data => ({
                 lat: data.geoCode.latitude,
-                lng: data.geoCode.longitude
+                lng: data.geoCode.longitude,
+                propertyId: data.propertyId
             })) : undefined
             setPositions(geoData)
         } else if (currentListing && currentListing?.geoCode?.latitude && currentListing?.geoCode?.longitude) {
@@ -40,6 +43,12 @@ export default function Map() {
             getPosition(setGeoData)
         }
     }, [currentListing, checkedProperties, listings])
+
+    const onCircleMarkerClick = (propertyId?: string) => {
+        if (!propertyId) return;
+        const property = listings?.find(item => item.propertyId === propertyId)
+        if (property) setCurrentListing(property)
+    }
 
     if (!window || !geoData) return null
 
@@ -54,7 +63,9 @@ export default function Map() {
             {
                 positions && positions.length > 0 && positions.map((marker, i) => (
                     <React.Fragment key={marker.lat + '-' + marker.lng + '-' + i}>
-                        <CircleMarker center={[marker.lat, marker.lng]}>
+                        <CircleMarker eventHandlers={{
+                            click: () => onCircleMarkerClick(marker?.propertyId)
+                        }} center={[marker.lat, marker.lng]}>
                             <Popup keepInView minWidth={300}>
                                 <MapPopup />
                             </Popup>
