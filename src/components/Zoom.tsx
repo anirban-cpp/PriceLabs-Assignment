@@ -9,7 +9,7 @@ const Zoom = () => {
     const zoom = useApiDataStore(state => state.zoom)
 
     return (
-        <div className='flex flex-col rounded-md absolute top-5 right-5 gap-1 !z-[9999]'>
+        <div className='flex flex-col rounded-md absolute top-36 right-3 gap-1 !z-[9999]'>
             <button onClick={() => setZoom(zoom+1)} className='shadow-md p-3 border-gray-400 bg-slate-50'>
                 <MdZoomInMap size={16} />
             </button>

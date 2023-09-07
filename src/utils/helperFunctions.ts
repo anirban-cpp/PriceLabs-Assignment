@@ -130,3 +130,26 @@ export const removePropertyFromList = (
   const newList = listings?.filter((item) => item.propertyId !== propertyId);
   if (newList && newList.length > 0) setListings(newList);
 };
+
+export const getBoundedProperties = (
+  listings?: Listing[],
+  geoCodeNorthEast?: { lat: number; lng: number },
+  geoCodeSouthWest?: { lat: number; lng: number }
+) => {
+  if (!listings || !geoCodeNorthEast || !geoCodeSouthWest) return undefined;
+
+  const { lat: neLat, lng: neLng } = geoCodeNorthEast;
+  const { lat: swLat, lng: swLng } = geoCodeSouthWest;
+
+  const boundedProperties = listings.filter((item) => {
+    const { latitude, longitude } = item.geoCode;
+    return (
+      latitude >= swLat &&
+      latitude <= neLat &&
+      longitude >= swLng &&
+      longitude <= neLng
+    );
+  });
+  
+  return boundedProperties
+};
